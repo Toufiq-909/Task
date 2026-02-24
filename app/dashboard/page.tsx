@@ -77,18 +77,20 @@ export default function DashboardPage() {
 
   return (
     <ProtectedRoute>
-      <div className="min-h-screen bg-gradient-to-br from-background via-background to-accent/3">
+      <div className="min-h-screen bg-gradient-to-br from-background via-blue-50/20 to-accent/5">
         {/* Header */}
-        <header className="sticky top-0 z-50 bg-background/80 backdrop-blur-md border-b border-border/40">
-          <div className="max-w-7xl mx-auto px-6 py-5 flex justify-between items-center">
-            <div>
-              <h1 className="text-2xl font-semibold text-foreground">My Tasks</h1>
-              <p className="text-sm text-muted-foreground mt-1">Welcome back, {user?.username}!</p>
+        <header className="sticky top-0 z-50 bg-white/50 backdrop-blur-xl border-b border-border/30 shadow-sm">
+          <div className="max-w-7xl mx-auto px-6 py-6 flex justify-between items-center">
+            <div className="animate-slide-down">
+              <div className="flex items-center gap-3 mb-2">
+                <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-primary to-accent shadow-lg shadow-primary/30"></div>
+                <h1 className="text-3xl font-bold text-foreground">My Tasks</h1>
+              </div>
+              <p className="text-sm text-muted-foreground">Welcome, {user?.username}</p>
             </div>
             <Button
-              variant="ghost"
               onClick={handleLogout}
-              className="flex items-center gap-2 text-muted-foreground hover:text-foreground hover:bg-secondary"
+              className="flex items-center gap-2 text-sm font-medium bg-white border border-border/40 text-foreground hover:bg-muted/50 rounded-xl h-10 transition-all duration-200"
             >
               <LogOut className="w-4 h-4" />
               Sign out
@@ -97,9 +99,9 @@ export default function DashboardPage() {
         </header>
 
         {/* Main Content */}
-        <main className="max-w-7xl mx-auto px-6 py-8">
+        <main className="max-w-7xl mx-auto px-6 py-12">
           {error && (
-            <div className="mb-6 p-4 bg-destructive/10 border border-destructive/30 rounded-lg text-destructive text-sm">
+            <div className="mb-8 p-5 bg-destructive/8 border border-destructive/20 rounded-xl text-destructive text-sm font-medium animate-slide-up">
               {error}
             </div>
           )}
@@ -107,7 +109,7 @@ export default function DashboardPage() {
           <div className="grid gap-8 lg:grid-cols-3">
             {/* Create Task Form */}
             <div className="lg:col-span-1">
-              <div className="sticky top-20">
+              <div className="sticky top-28">
                 <TaskForm onSubmit={handleCreateTask} loading={loading} />
               </div>
             </div>
@@ -115,18 +117,20 @@ export default function DashboardPage() {
             {/* Task List */}
             <div className="lg:col-span-2">
               {loading ? (
-                <div className="flex items-center justify-center p-16">
+                <div className="flex items-center justify-center p-20 animate-fade-in">
                   <div className="flex flex-col items-center gap-4">
-                    <div className="animate-spin rounded-full h-10 w-10 border-2 border-primary/30 border-t-primary"></div>
-                    <p className="text-muted-foreground text-sm">Loading your tasks...</p>
+                    <div className="w-12 h-12 rounded-full border-3 border-primary/20 border-t-primary animate-spin"></div>
+                    <p className="text-muted-foreground text-sm font-medium">Loading your tasks...</p>
                   </div>
                 </div>
               ) : (
-                <TaskList
-                  tasks={tasks}
-                  onToggle={handleToggleTask}
-                  onDelete={handleDeleteTask}
-                />
+                <div className="animate-fade-in">
+                  <TaskList
+                    tasks={tasks}
+                    onToggle={handleToggleTask}
+                    onDelete={handleDeleteTask}
+                  />
+                </div>
               )}
             </div>
           </div>

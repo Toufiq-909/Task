@@ -46,48 +46,51 @@ export function TaskList({ tasks, onToggle, onDelete, loading = false }: TaskLis
 
   if (tasks.length === 0) {
     return (
-      <Card className="border-border/50 bg-card/50 backdrop-blur-sm">
-        <CardContent className="pt-16 pb-16">
-          <div className="text-center">
-            <div className="w-16 h-16 rounded-full bg-accent/10 flex items-center justify-center mx-auto mb-4">
-              <Circle className="w-8 h-8 text-accent/40" />
-            </div>
-            <p className="text-muted-foreground">No tasks yet. Create one to get started!</p>
-          </div>
-        </CardContent>
-      </Card>
+      <div className="text-center py-20 animate-fade-in">
+        <div className="w-20 h-20 rounded-2xl bg-gradient-to-br from-accent/10 to-primary/10 flex items-center justify-center mx-auto mb-6">
+          <Circle className="w-10 h-10 text-accent/30" />
+        </div>
+        <h3 className="text-xl font-semibold text-foreground mb-2">No tasks yet</h3>
+        <p className="text-muted-foreground max-w-sm mx-auto">Start by creating a new task to organize your work and stay productive.</p>
+      </div>
     );
   }
 
   return (
-    <div className="space-y-3">
-      <div className="flex items-center justify-between px-1">
-        <h2 className="text-lg font-semibold text-foreground">Your tasks</h2>
-        <span className="text-sm text-muted-foreground">{tasks.length} task{tasks.length !== 1 ? 's' : ''}</span>
+    <div className="space-y-4 animate-fade-in">
+      <div className="flex items-center justify-between px-2">
+        <h2 className="text-2xl font-bold text-foreground">Tasks</h2>
+        <span className="inline-flex items-center gap-2 px-3 py-1 bg-primary/10 text-primary font-semibold text-sm rounded-full">
+          {tasks.filter(t => !t.completed).length} active
+        </span>
       </div>
-      <div className="space-y-2">
-        {tasks.map((task) => (
+      <div className="space-y-3">
+        {tasks.map((task, index) => (
           <div
             key={task._id}
-            className="group flex items-start gap-3 p-4 bg-card border border-border/40 rounded-lg hover:border-border hover:shadow-sm transition-all duration-200"
+            className="group flex items-start gap-4 p-5 bg-white border border-border/40 rounded-xl hover:border-primary/30 hover:shadow-md hover:shadow-primary/10 transition-all duration-300 animate-slide-up"
+            style={{
+              animationDelay: `${index * 50}ms`,
+              animation: `slideInUp 0.3s ease-out ${index * 0.05}s both`
+            }}
           >
             <button
               onClick={() => handleToggle(task)}
               disabled={togglingId === task._id}
-              className="mt-1 text-muted-foreground hover:text-primary transition-colors disabled:opacity-50 flex-shrink-0"
+              className="mt-0.5 text-muted-foreground hover:text-primary transition-all duration-200 disabled:opacity-50 flex-shrink-0"
             >
               {task.completed ? (
-                <CheckCircle2 className="w-5 h-5 text-accent" />
+                <CheckCircle2 className="w-6 h-6 text-accent" />
               ) : (
-                <Circle className="w-5 h-5" />
+                <Circle className="w-6 h-6 hover:scale-110 transition-transform" />
               )}
             </button>
 
-            <div className="flex-1 min-w-0">
+            <div className="flex-1 min-w-0 py-1">
               <h3
-                className={`font-medium transition-all ${
+                className={`font-semibold text-lg transition-all duration-200 ${
                   task.completed
-                    ? 'line-through text-muted-foreground'
+                    ? 'line-through text-muted-foreground/60'
                     : 'text-foreground'
                 }`}
               >
@@ -95,9 +98,9 @@ export function TaskList({ tasks, onToggle, onDelete, loading = false }: TaskLis
               </h3>
               {task.description && (
                 <p
-                  className={`text-sm mt-1 transition-all ${
+                  className={`text-sm mt-2 transition-all duration-200 ${
                     task.completed
-                      ? 'line-through text-muted-foreground/60'
+                      ? 'line-through text-muted-foreground/40'
                       : 'text-muted-foreground'
                   }`}
                 >
@@ -109,7 +112,7 @@ export function TaskList({ tasks, onToggle, onDelete, loading = false }: TaskLis
             <button
               onClick={() => handleDelete(task._id)}
               disabled={deletingId === task._id}
-              className="text-muted-foreground hover:text-destructive transition-colors disabled:opacity-50 flex-shrink-0 opacity-0 group-hover:opacity-100"
+              className="text-muted-foreground hover:text-destructive hover:bg-destructive/10 transition-all duration-200 disabled:opacity-50 flex-shrink-0 opacity-0 group-hover:opacity-100 p-2 rounded-lg"
             >
               <Trash2 className="w-5 h-5" />
             </button>

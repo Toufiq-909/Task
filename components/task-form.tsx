@@ -36,45 +36,54 @@ export function TaskForm({ onSubmit, loading = false }: TaskFormProps) {
   };
 
   return (
-    <Card className="border-border/50 bg-card/50 backdrop-blur-sm shadow-sm sticky top-20">
-      <CardHeader className="pb-4">
-        <CardTitle className="text-lg font-semibold text-foreground">New task</CardTitle>
+    <Card className="border border-border/40 bg-gradient-to-b from-white/90 to-white/80 backdrop-blur-xl shadow-lg shadow-primary/10 rounded-2xl sticky top-28">
+      <CardHeader className="pb-5">
+        <CardTitle className="text-2xl font-bold text-foreground">Create task</CardTitle>
       </CardHeader>
       <CardContent>
-        <form onSubmit={handleSubmit} className="space-y-4">
+        <form onSubmit={handleSubmit} className="space-y-5">
           {error && (
-            <div className="p-3 bg-destructive/10 border border-destructive/30 rounded-lg text-sm text-destructive">
+            <div className="p-4 bg-destructive/8 border border-destructive/20 rounded-lg text-sm text-destructive font-medium animate-slide-up">
               {error}
             </div>
           )}
 
-          <div className="space-y-2">
-            <Label htmlFor="title" className="text-sm font-medium">Title</Label>
+          <div className="space-y-3">
+            <Label htmlFor="title" className="text-sm font-semibold text-foreground">Title</Label>
             <Input
               id="title"
               type="text"
-              placeholder="What do you need to do?"
+              placeholder="What's on your mind?"
               value={title}
               onChange={(e) => setTitle(e.target.value)}
-              className="bg-background border-border/50"
+              className="bg-white border-border/60 rounded-xl h-11 text-sm placeholder:text-muted-foreground/50 focus:border-primary/50 focus:ring-2 focus:ring-primary/10"
               required
             />
           </div>
 
-          <div className="space-y-2">
-            <Label htmlFor="description" className="text-sm font-medium">Details</Label>
+          <div className="space-y-3">
+            <Label htmlFor="description" className="text-sm font-semibold text-foreground">Details</Label>
             <Textarea
               id="description"
-              placeholder="Add more details... (optional)"
+              placeholder="Add more context... (optional)"
               value={description}
               onChange={(e) => setDescription(e.target.value)}
-              className="bg-background border-border/50 resize-none"
-              rows={3}
+              className="bg-white border-border/60 rounded-xl resize-none text-sm placeholder:text-muted-foreground/50 focus:border-primary/50 focus:ring-2 focus:ring-primary/10"
+              rows={4}
             />
           </div>
 
-          <Button type="submit" className="w-full bg-primary hover:bg-primary/90 text-primary-foreground font-medium py-2 h-auto" disabled={loading}>
-            {loading ? 'Creating...' : 'Create task'}
+          <Button 
+            type="submit" 
+            className="w-full bg-gradient-to-r from-primary to-primary/90 hover:shadow-lg hover:shadow-primary/20 text-primary-foreground font-semibold py-2.5 h-11 rounded-xl transition-all duration-200 text-base mt-6"
+            disabled={loading}
+          >
+            {loading ? (
+              <span className="flex items-center justify-center gap-2">
+                <div className="w-4 h-4 rounded-full border-2 border-white/30 border-t-white animate-spin"></div>
+                Creating...
+              </span>
+            ) : 'Create task'}
           </Button>
         </form>
       </CardContent>
