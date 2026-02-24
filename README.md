@@ -149,23 +149,7 @@ PORT=5000
 NODE_ENV=development
 ```
 
-## Deployment
 
-### Deploy to Vercel (Frontend)
-1. Push your code to GitHub
-2. Connect your repository to Vercel
-3. Add environment variable `NEXT_PUBLIC_API_URL` pointing to your backend
-4. Deploy
-
-### Deploy Backend (Express)
-
-Options:
-- **Heroku**: `git push heroku main`
-- **Railway**: Connect GitHub repo and deploy
-- **Render**: Create new Web Service from GitHub repo
-- **AWS/GCP/Azure**: Use respective deployment services
-
-Update frontend `NEXT_PUBLIC_API_URL` to point to deployed backend.
 
 ## Security Considerations
 
