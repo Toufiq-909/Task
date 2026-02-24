@@ -77,44 +77,49 @@ export default function DashboardPage() {
 
   return (
     <ProtectedRoute>
-      <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100">
+      <div className="min-h-screen bg-gradient-to-br from-background via-background to-accent/3">
         {/* Header */}
-        <header className="bg-white shadow">
-          <div className="max-w-6xl mx-auto px-4 py-6 flex justify-between items-center">
+        <header className="sticky top-0 z-50 bg-background/80 backdrop-blur-md border-b border-border/40">
+          <div className="max-w-7xl mx-auto px-6 py-5 flex justify-between items-center">
             <div>
-              <h1 className="text-3xl font-bold text-gray-900">Task Dashboard</h1>
-              <p className="text-gray-600 mt-1">Welcome, {user?.username}!</p>
+              <h1 className="text-2xl font-semibold text-foreground">My Tasks</h1>
+              <p className="text-sm text-muted-foreground mt-1">Welcome back, {user?.username}!</p>
             </div>
             <Button
-              variant="outline"
+              variant="ghost"
               onClick={handleLogout}
-              className="flex items-center gap-2"
+              className="flex items-center gap-2 text-muted-foreground hover:text-foreground hover:bg-secondary"
             >
               <LogOut className="w-4 h-4" />
-              Logout
+              Sign out
             </Button>
           </div>
         </header>
 
         {/* Main Content */}
-        <main className="max-w-6xl mx-auto px-4 py-8">
+        <main className="max-w-7xl mx-auto px-6 py-8">
           {error && (
-            <div className="mb-6 p-4 bg-red-50 border border-red-200 rounded-lg text-red-700">
+            <div className="mb-6 p-4 bg-destructive/10 border border-destructive/30 rounded-lg text-destructive text-sm">
               {error}
             </div>
           )}
 
-          <div className="grid gap-8 md:grid-cols-3">
+          <div className="grid gap-8 lg:grid-cols-3">
             {/* Create Task Form */}
-            <div className="md:col-span-1">
-              <TaskForm onSubmit={handleCreateTask} loading={loading} />
+            <div className="lg:col-span-1">
+              <div className="sticky top-20">
+                <TaskForm onSubmit={handleCreateTask} loading={loading} />
+              </div>
             </div>
 
             {/* Task List */}
-            <div className="md:col-span-2">
+            <div className="lg:col-span-2">
               {loading ? (
-                <div className="flex items-center justify-center p-8">
-                  <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-gray-900"></div>
+                <div className="flex items-center justify-center p-16">
+                  <div className="flex flex-col items-center gap-4">
+                    <div className="animate-spin rounded-full h-10 w-10 border-2 border-primary/30 border-t-primary"></div>
+                    <p className="text-muted-foreground text-sm">Loading your tasks...</p>
+                  </div>
                 </div>
               ) : (
                 <TaskList
